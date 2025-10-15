@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 const allowed = [process.env.FRONTEND_URL, process.env.FRONTEND_URL2];
 
-Middleware
+
 app.use(
   cors({
     origin: function (origin, callback) {
