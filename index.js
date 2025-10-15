@@ -13,26 +13,26 @@ app.use(bodyParser.json());
 
 const allowed = [process.env.FRONTEND_URL, process.env.FRONTEND_URL2];
 
-// Middleware
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       // Allow requests with no origin (like Postman or server-to-server)
-//       if (!origin) return callback(null, true);
+Middleware
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like Postman or server-to-server)
+      if (!origin) return callback(null, true);
 
-//       if (allowed.indexOf(origin) !== -1) {
-//         //  Origin is allowed
-//         return callback(null, true);
-//       } else {
-//         //  Origin not allowed
-//         return callback(new Error("CORS origin not allowed"));
-//       }
-//     },
-//     methods: ["GET", "POST", "DELETE"],
-//     credentials: true,
-//   })
-// );
-app.use(cors())
+      if (allowed.indexOf(origin) !== -1) {
+        //  Origin is allowed
+        return callback(null, true);
+      } else {
+        //  Origin not allowed
+        return callback(new Error("CORS origin not allowed"));
+      }
+    },
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
+  })
+);
+// app.use(cors())
 app.use("/v1/v2/vz/api/forms",formRoutes)
 // Serve static files from the React app
 // app.use(express.static(path.join(__dirname, "dist")));
