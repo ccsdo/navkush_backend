@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+
+
 const getInvolveController = require("../controller/getInvolveController");
 const donationController = require("../controller/donationController");
 const donationSupportController = require("../controller/donationSupportController");
@@ -10,6 +12,7 @@ const VolunteerForm = require("../controller/volunteerFormController");
 const createMembershipForm = require("../controller/membershipController");
 const internshipController = require("../controller/internshipController");
 const createSponsorship = require("../controller/sponsorshipController");
+const joinNgoController = require("../controller/joinNgoController");
 
 
 
@@ -23,16 +26,20 @@ const VolunteerFormSchema = require("../validators/VolunteerFormSchemaValidator"
 const membershipFormSchemaValidator = require("../validators/memberShipSchemaValidator");
 const internshipSchema = require("../validators/internshipSchemaValidator");
 const sponsorshipSchema = require("../validators/sponsorShipSchemaValidator");
+const  joinNgoSchemaValidator  = require("../validators/joinNgoSchemaValidator");
+const careerSchema = require("../validators/CareerSchemaValidator");
 
-
-
+const upload =require("../middleware/multer")
 const  validate  = require("../middleware/validate");
+const careerSchemaController = require("../controller/careerSchemaController");
 
 
 
 
 
 
+
+ 
 
 
 router.post("/getinvolve",validate(getInvolveSchemaValidator), getInvolveController);
@@ -45,7 +52,15 @@ router.post("/volunteerform",validate(VolunteerFormSchema), VolunteerForm);
 router.post("/membershipform",validate(membershipFormSchemaValidator), createMembershipForm);
 router.post("/internshipform", validate(internshipSchema), internshipController)
 router.post("/sponsorship",validate(sponsorshipSchema), createSponsorship)
-
+router.post("/joinngo",upload.fields([
+    { name: "panCard", maxCount: 1 },
+    { name: "registrationCertificate", maxCount: 1 },
+    { name: "bylaws", maxCount: 1 },
+    { name: "auditReport", maxCount: 1 },
+    { name: "annualReport", maxCount: 1 },
+    { name: "certificate80G", maxCount: 1 },
+  ]),validate(joinNgoSchemaValidator),joinNgoController)
+router.post("/career",upload.fields([{name:"resume",maxCount:1}]),validate(careerSchema), careerSchemaController)
 module.exports = router;
 
 
