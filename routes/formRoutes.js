@@ -64,3 +64,4 @@ router.post("/career",upload.fields([{name:"resume",maxCount:1}]),validate(caree
 module.exports = router;
 
 
+ 
