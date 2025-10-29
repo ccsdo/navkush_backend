@@ -32,7 +32,10 @@ const careerSchema = require("../validators/CareerSchemaValidator");
 const upload =require("../middleware/multer")
 const  validate  = require("../middleware/validate");
 const careerSchemaController = require("../controller/careerSchemaController");
-
+const fetchDataController = require("../controller/fetchDataController");
+const adminSchema = require("../validators/adminValidator");
+const adminRegisterController = require("../controller/adminRegisterController");
+const adminLoginController = require("../controller/adminLoginController");
 
 
 
@@ -61,6 +64,13 @@ router.post("/joinngo",upload.fields([
     { name: "certificate80G", maxCount: 1 },
   ]),validate(joinNgoSchemaValidator),joinNgoController)
 router.post("/career",upload.fields([{name:"resume",maxCount:1}]),validate(careerSchema), careerSchemaController)
+router.get("/all",fetchDataController);
+router.post("/register",validate(adminSchema),adminRegisterController)
+router.post("/login", validate(adminSchema), adminLoginController);
+
+
+
+
 module.exports = router;
 
 

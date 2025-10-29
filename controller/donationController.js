@@ -5,10 +5,7 @@ const createDonationForm = async (req, res) => {
     try {
         console.log("Request Body:Ijkdfbgkjsdfbdf");
         const newForm = new donationForm(req.body);
-        // console.log("Req Body:", req.body);
-        // console.log(newForm);
         await newForm.save();
-// console.log(newForm);
         donationTemplate(newForm)
         res.status(201).json(newForm);
     } catch (error) {

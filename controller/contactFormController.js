@@ -4,7 +4,6 @@ const contactFormTemplate = require("../templates/contactFormTemplate");
 const contactController = async (req, res) => {
     try {
         const newForm = new ContactForm(req.body);
-        console.log("Req Body:", req.body);
         await newForm.save();
         contactFormTemplate(newForm)
         res.status(201).json(newForm);
