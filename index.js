@@ -19,7 +19,7 @@ app.use(
     origin: function (origin, callback) {
       // Allow requests with no origin (like Postman or server-to-server)
       
-      if (!origin) return callback(null, true);
+      //if (!origin) return callback(null, true);
 
       if (allowed.indexOf(origin) !== -1) {
         //  Origin is allowed
