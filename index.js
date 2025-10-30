@@ -12,7 +12,11 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(bodyParser.json());
 
 const allowed = [process.env.FRONTEND_URL, process.env.FRONTEND_URL2];
-
+app.use((req, res, next) => {
+  const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
+  console.log(`[${new Date().toLocaleString("en-IN")}] Request from IP: ${ip}, Origin: ${req.headers.origin || "undefined"}`);
+  next();
+});
  
 app.use(
   cors({
