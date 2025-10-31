@@ -32,7 +32,7 @@ const { ZodError } = require("zod");
 
 const validate = (schema) => (req, res, next) => {
   try {
-    // console.log("Validating request body:", req.body);
+    console.log("Validating request body:", req.body);
     req.body = schema.parse(req.body); // parse + validate
     next();
   } catch (err) {

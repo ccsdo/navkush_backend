@@ -1,3 +1,13 @@
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("❌ Unhandled Promise Rejection:", err);
+});
+
+
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -29,8 +39,13 @@ app.use(
         //  Origin is allowed
         return callback(null, true);
       } else {
+          const now = new Date();
+        const formatted = now.toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        });
+        console.warn(`[${formatted}]  CORS blocked: ${origin}`);
         //  Origin not allowed
-        return callback(new Error("CORS origin not allowed"));
+        return callback(null, false);
       }
     },
     methods: ["GET", "POST", "DELETE"],
@@ -39,6 +54,13 @@ app.use(
 );
 // app.use(cors())
 app.use("/v1/v2/vz/api/forms",formRoutes)
+app.use((req, res, next) => {
+  const ua = req.headers["user-agent"] || "";
+  if (ua.includes("autocannon")) {
+    return res.status(403).send("Forbidden");
+  }
+  next();
+});
 // Serve static files from the React app
 // app.use(express.static(path.join(__dirname, "dist")));
 // Catch-all route to serve index.html
@@ -51,4 +73,10 @@ connectDB();
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server running on http://localhost:${process.env.PORT || 5000}`);
+});
+
+
+app.use((err, req, res, next) => {
+  console.error("API Error:", err);
+  res.status(500).json({ success: false, message: "Server Error" });
 });
