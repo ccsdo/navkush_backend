@@ -14,7 +14,9 @@ const donationSupportSchema = z.object({
   phone: z.string()
     .regex(/^\d{10}$/, "Mobile must be 10 digits")
     .transform(sanitizeInput),
-message:z.string().min(10,"Message must be at least 10 characters long").transform(sanitizeInput).optional()
+  amount: z.string().optional(),
+  customAmount: z.string().optional(),
+message:z.string().transform(sanitizeInput).optional()
 });
 
 

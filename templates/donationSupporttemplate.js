@@ -2,7 +2,7 @@ const sendmail = require("../config/emailSetup");
 
 const donationTemplate=(data)=>{
     console.log("Donation Template Data:", data);
-const { name, email, phone, message} = data;
+const { name, email, phone, message, amount, customAmount } = data;
 const year = new Date().getFullYear();
   let emailText=`<!DOCTYPE html>
 <html lang="en">
@@ -39,7 +39,9 @@ const year = new Date().getFullYear();
         <p><span class="label">Name:</span> ${name || ''}</p>
         <p><span class="label">Email:</span> ${email || ''}</p>
         <p><span class="label">Phone:</span> ${phone || ''}</p>
-        <p><span class="label">Message:</span> ${message || ''}</p>
+        <p><span class="label">Amount:</span> ${amount || 'N/A'}</p>
+        <p><span class="label">Custom Amount:</span> ${customAmount || 'N/A'}</p>
+        <p><span class="label">Message:</span> ${message || 'N/A'}</p>
 
         <div class="footer">
             &copy; ${year} navkush org. All rights reserved.
